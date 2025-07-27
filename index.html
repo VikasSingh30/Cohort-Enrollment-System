@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GradNext - Consulting Cohort 101</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/script.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap" style="margin-right: 1rem;"></i>GradNext</h1>
+            <p>Consulting Cohort 101 - Premium Enrollment System</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('form')">
+                <i class="fas fa-user-plus" style="margin-right: 0.5rem;"></i>
+                Interest Form
+            </div>
+            <div class="tab" onclick="switchTab('dashboard')">
+                <i class="fas fa-chart-line" style="margin-right: 0.5rem;"></i>
+                Admin Dashboard
+            </div>
+            <div class="tab" onclick="switchTab('simulator')">
+                <i class="fas fa-cogs" style="margin-right: 0.5rem;"></i>
+                Email Simulator
+            </div>
+        </div>
+
+        <!-- Interest Form Tab -->
+        <div id="form" class="tab-content active">
+            <h2><i class="fas fa-rocket" style="margin-right: 0.75rem;"></i>Apply for Consulting Cohort 101</h2>
+            <p>Join our exclusive consulting program and accelerate your career with industry experts and proven
+                methodologies!</p>
+
+            <div id="interest-form">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user" style="margin-right: 0.5rem;"></i>Full Name *</label>
+                    <input type="text" id="name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>Email Address
+                        *</label>
+                    <input type="email" id="email" required placeholder="your@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone"><i class="fas fa-mobile-alt" style="margin-right: 0.5rem;"></i>Phone Number
+                        *</label>
+                    <input type="tel" id="phone" required placeholder="+1 (555) 123-4567">
+                </div>
+
+                <button class="btn" onclick="submitForm()">
+                    <i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i>
+                    Submit Application
+                </button>
+            </div>
+
+            <div id="form-success" class="success-message" style="display: none;">
+                <h3>
+                    <i class="fas fa-check-circle"></i>
+                    Application Submitted Successfully!
+                </h3>
+                <p>Thank you for your interest in our Consulting Cohort 101. You'll receive a confirmation email shortly
+                    with next steps and payment information.</p>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard Tab -->
+        <div id="dashboard" class="tab-content">
+            <h2><i class="fas fa-tachometer-alt" style="margin-right: 0.75rem;"></i>Admin Dashboard</h2>
+
+            <div class="dashboard-grid">
+                <div class="stats-card">
+                    <i class="fas fa-users"></i>
+                    <h3 id="total-submissions">0</h3>
+                    <p>Total Submissions</p>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3 id="emails-sent">0</h3>
+                    <p>Emails Sent</p>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-credit-card"></i>
+                    <h3 id="paid-users">0</h3>
+                    <p>Paid Users</p>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3 id="conversion-rate">0%</h3>
+                    <p>Conversion Rate</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">
+                <i class="fas fa-route"></i>
+                User Journey Tracking
+            </h3>
+            <div id="user-list"></div>
+
+            <h3 class="section-title">
+                <i class="fas fa-history"></i>
+                Email Activity Log
+            </h3>
+            <div id="email-log" class="email-log"></div>
+        </div>
+
+        <!-- Email Simulator Tab -->
+        <div id="simulator" class="tab-content">
+            <h2><i class="fas fa-play-circle" style="margin-right: 0.75rem;"></i>Email Interaction Simulator</h2>
+            <p>Simulate user email interactions to test the automation workflow and analyze user behavior patterns.</p>
+
+            <div class="simulation-controls">
+                <h3><i class="fas fa-user-cog"></i>Simulate User Actions</h3>
+
+                <div class="control-group">
+                    <div>
+                        <label><i class="fas fa-users" style="margin-right: 0.5rem; color: #2563eb;"></i>Select
+                            User:</label>
+                        <select id="user-selector" class="blue-select">
+                            <option value="">Choose a user to simulate...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div>
+                        <label><i class="fas fa-mouse-pointer"
+                                style="margin-right: 0.5rem; color: #2563eb;"></i>Action:</label>
+                        <select id="action-selector" class="blue-select">
+                            <option value="open">Open Email</option>
+                            <option value="click">Click Payment Link</option>
+                            <option value="reply">Reply to Email</option>
+                            <option value="pay">Complete Payment</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-blue" onclick="simulateAction()">
+                        <i class="fas fa-play" style="margin-right: 0.5rem;"></i>
+                        Simulate Action
+                    </button>
+                </div>
+
+                <div class="control-group">
+                    <button class="btn" onclick="triggerScheduledEmails()">
+                        <i class="fas fa-clock" style="margin-right: 0.5rem;"></i>
+                        Trigger Scheduled Follow-ups
+                    </button>
+                    <button class="btn btn-danger" onclick="clearAllData()">
+                        <i class="fas fa-trash-alt" style="margin-right: 0.5rem;"></i>
+                        Clear All Data
+                    </button>
+                </div>
+            </div>
+
+            <div class="simulation-controls">
+                <h3><i class="fas fa-webhook"></i>Webhook Simulator</h3>
+                <div class="control-group">
+                    <div>
+                        <label><i class="fas fa-credit-card" style="margin-right: 0.5rem; color: #2563eb;"></i>Payment
+                            Status:</label>
+                        <select id="payment-status" class="blue-select">
+                            <option value="success">Success</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label><i class="fas fa-user" style="margin-right: 0.5rem; color: #2563eb;"></i>Select
+                            User:</label>
+                        <select id="payment-user" class="blue-select">
+                            <option value="">Choose user for payment simulation...</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-blue" onclick="simulatePayment()">
+                        <i class="fas fa-dollar-sign" style="margin-right: 0.5rem;"></i>
+                        Simulate Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
